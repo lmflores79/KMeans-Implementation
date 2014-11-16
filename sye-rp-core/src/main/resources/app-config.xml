@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<bean id="csvReader" class="com.sye.pr.dal.impl.CsvReaderImpl">
+	</bean>
+	
+
+	<bean id="patternLoader" class="com.sye.pr.core.utils.impl.PatternLoaderImpl">
+		 <property name="reader" ref="csvReader" />		
+	</bean>	
+	
+	<bean id="distanceCalculator" class="com.sye.pr.core.utils.distance.impl.EuclideanDistanceCalculatorImpl">		
+	</bean>	
+	
+	<bean id="clusterSelector" class="com.sye.pr.core.clustering.kmeans.impl.RandomClusterSelectorImpl">		
+	</bean>	
+	
+	<bean id="patternProcessor" class="com.sye.pr.core.clustering.kmeans.impl.StandardPatternProcessorImpl">
+		<property name="distanceCalculator" ref="distanceCalculator" />		
+	</bean>
+		
+	<bean id="kmeansClusteringSvc" class="com.sye.pr.core.clustering.kmeans.impl.KMeansClusteringMethodImpl">		
+		<property name="clusterSelector" ref="clusterSelector" />
+		<property name="patternProcessor" ref="patternProcessor" />
+					
+	</bean>
+	
+	
+	
+</beans>
